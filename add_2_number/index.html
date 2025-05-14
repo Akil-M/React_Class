@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./logoadd.png" type="image/png">
+    <title>ADD</title>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #65bccc;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .frame {
+            background-color: #ffffffbc;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.954);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p#res {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            width: 100%;
+        }
+
+        .home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+        }
+
+        #backAnim {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            display: none;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.212);
+            border-radius: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="home" onclick="goBack()">🔙</button>
+
+    <dotlottie-player
+        id="backAnim"
+        src="https://lottie.host/4669b6c7-50b7-4f2d-b8c0-c8b849c76171/JLbZl58Rf7.lottie"
+        background="transparent"
+        speed="1"
+        style="width: 300px; height: 300px"
+        loop
+        autoplay
+    ></dotlottie-player>
+
+    <div class="frame">
+        <label for="num1">Enter a number 1</label>
+        <input type="number" name="num1" id="num1"> <br><br>
+
+        <label for="num2">Enter a number 2</label>
+        <input type="number" name="num2" id="num2"> <br><br>
+
+        <button onclick="add()">Submit</button>
+
+        <p id="res">After entering the numbers, the output will be displayed</p>
+    </div>
+
+    <script>
+        function add() {
+            let num1 = parseFloat(document.getElementById("num1").value);
+            let num2 = parseFloat(document.getElementById("num2").value);
+            
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Please enter valid numbers!");
+                return;
+            }
+
+            let sum = num1 + num2;
+            document.getElementById("res").innerText = `Result: ${sum}`;
+        }
+
+        function goBack() {
+            const anim = document.getElementById('backAnim');
+            anim.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = '../index/index.html'; 
+            }, 1500); 
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="./stopwatch.png" type="image/png">
+  <title>StopWatch</title>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #76c7dad7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .frame {
+      background-color: #ffffffa1;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.891);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: -40px;
+    }
+
+    #count {
+      font-size: 72px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 5px;
+      font-size: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    button#stop {
+      background-color: #f44336;
+    }
+
+    button#stop:hover {
+      background-color: #d73833;
+    }
+
+    button#reset {
+      background-color: #008CBA;
+    }
+
+    button#reset:hover {
+      background-color: #007bb5;
+    }
+
+    .home {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      background-color: transparent;
+      cursor: pointer;
+      border: none;
+    }
+
+    #backAnim {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      display: none;
+      z-index: 999;
+      background-color: rgba(0, 0, 0, 0.212);
+      border-radius: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="home" onclick="goBack()">🔙</button>
+
+  <dotlottie-player
+    id="backAnim"
+    src="https://lottie.host/4669b6c7-50b7-4f2d-b8c0-c8b849c76171/JLbZl58Rf7.lottie"
+    background="transparent"
+    speed="1"
+    style="width: 300px; height: 300px"
+    loop
+    autoplay
+  ></dotlottie-player>
+
+  <div class="frame">
+    <p id="count">0</p>
+    <div>
+      <button id="start" onclick="start()">Start</button>
+      <button id="stop" onclick="stop()">Stop</button>
+      <button id="reset" onclick="reset()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let intervalId;
+    let count = 0;
+
+    function start() {
+      if (!intervalId) {
+        intervalId = setInterval(() => {
+          count++;
+          document.getElementById('count').innerText = count;
+        }, 1000);
+      }
+    }
+
+    function stop() {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+
+    function reset() {
+      clearInterval(intervalId);
+      intervalId = null;
+      count = 0;
+      document.getElementById('count').innerText = count;
+    }
+
+    function goBack() {
+      const anim = document.getElementById('backAnim');
+      anim.style.display = 'block';
+      setTimeout(() => {
+        window.location.href = '../index/index.html';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

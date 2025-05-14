@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./calculator.png" type="image/png" />
+  <title>Calculator</title>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #4eb6dcb9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .frame {
+      background-color: #ffffffc1;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.902);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    fieldset {
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+      padding: 15px;
+      width: 260px;
+      background-color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    legend {
+      font-weight: bold;
+      font-size: 18px;
+      color: #4CAF50;
+    }
+
+    #res {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+    }
+
+    .calculator button {
+      height: 60px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      color: #333;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s ease;
+    }
+
+    .calculator button:hover {
+      background-color: #dcdcdc;
+    }
+
+    .calculator button:active {
+      background-color: #ccc;
+      transform: scale(0.97);
+    }
+
+    .calculator button.number {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    .calculator button.number:hover {
+      background-color: #dcdcdc;
+    }
+
+    .calculator button.operator {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .calculator button.operator:hover {
+      background-color: #45a049;
+    }
+
+    .calculator button.equal {
+      background-color: #007bb5;
+      color: white;
+    }
+
+    .calculator button.equal:hover {
+      background-color: #007bb5;
+    }
+
+    .calculator button.reset {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    .calculator button.reset:hover {
+      background-color: #d32f2f;
+    }
+
+    .calculator button.del {
+      background-color: #fbc02d;
+      color: white;
+    }
+
+    .calculator button.del:hover {
+      background-color: #f9a825;
+    }
+
+    .home {
+      position: absolute;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+    }
+
+    .home:hover {
+      background-color: #45a049;
+    }
+
+    #backAnim {
+      width: 300px;
+      height: 300px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      z-index: 999;
+      background-color: rgba(0, 0, 0, 0.212);
+      border-radius: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="home" onclick="playBackAnimation()">🔙</button>
+
+  <dotlottie-player id="backAnim"
+    src="https://lottie.host/4669b6c7-50b7-4f2d-b8c0-c8b849c76171/JLbZl58Rf7.lottie" background="transparent" speed="2"
+    autoplay transform="scale(3)" ></dotlottie-player>
+  </dotlottie-player>
+
+  <div class="frame">
+    <fieldset>
+      <legend>Result</legend>
+      <p id="res"> $$$$ </p>
+    </fieldset>
+
+    <div class="calculator">
+      <button class="operator" onclick="fn('(')">(</button>
+      <button class="operator" onclick="fn(')')">)</button>
+      <button class="operator" onclick="fn('%')">%</button>
+      <button class="operator" onclick="fn('/')">/</button>
+
+      <button class="number" onclick="fn(7)">7</button>
+      <button class="number" onclick="fn(8)">8</button>
+      <button class="number" onclick="fn(9)">9</button>
+      <button class="operator" onclick="fn('*')">*</button>
+
+      <button class="number" onclick="fn(4)">4</button>
+      <button class="number" onclick="fn(5)">5</button>
+      <button class="number" onclick="fn(6)">6</button>
+      <button class="operator" onclick="fn('-')">-</button>
+
+      <button class="number" onclick="fn(1)">1</button>
+      <button class="number" onclick="fn(2)">2</button>
+      <button class="number" onclick="fn(3)">3</button>
+      <button class="operator" onclick="fn('+')">+</button>
+
+      <button class="number" onclick="fn(0)">0</button>
+      <button class="equal" onclick="cal()">=</button>
+      <button class="del" onclick="del()">⌫</button>
+      <button class="reset" onclick="reset()">♻️</button>
+    </div>
+  </div>
+
+  <script>
+    let res = "";
+
+    function fn(val) {
+      res += val;
+      document.getElementById('res').innerText = res;
+    }
+
+    function cal() {
+      try {
+        document.getElementById('res').innerText = eval(res);
+        res = eval(res);
+      } catch (e) {
+        alert("Error");
+        document.getElementById('res').innerText = "";
+        res = "";
+      }
+    }
+
+    function reset() {
+      res = "";
+      document.getElementById('res').innerText = "";
+    }
+
+    function del() {
+      res = res.slice(0, -1);
+      document.getElementById('res').innerText = res;
+    }
+
+    function playBackAnimation() {
+      const anim = document.getElementById('backAnim');
+      anim.style.display = 'block';
+      anim.play();
+      setTimeout(() => {
+        window.location.href = '../index/index.html';
+      }, 1800);
+    }
+  </script>
+</body>
+
+</html>

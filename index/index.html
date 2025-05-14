@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../media/logo.png" type="image/png" />
+  <title>Ding Ding</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <style>
+    #loaderWrapper {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      background-color: rgba(0, 0, 0, 0.212);
+      border-radius: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <audio id="buttonClickSound" src="../media/click-sound.mp3" preload="auto"></audio>
+
+  <nav class="bar">
+    <div class="bar__logo">
+      <img src="../media/ninja-hattori-logo.png" alt="Logo" />
+    </div>
+  </nav>
+  <div class="container">
+    <ul class="bar__menu">
+      <button class="but" onclick="playSoundAndNavigate('../add_2_number/index.html')">ADD</button>
+      <button class="but" onclick="playSoundAndNavigate('../fahrenheit_to_celsius/index.html')">Temperature</button>
+      <button class="but" onclick="playSoundAndNavigate('../stop_watch/index.html')">StopWatch</button>
+      <button class="but" onclick="playSoundAndNavigate('../cal/index.html')">Calculator</button>
+    </ul>
+  </div>
+
+  <div id="loaderWrapper">
+    <dotlottie-player
+      src="https://lottie.host/4669b6c7-50b7-4f2d-b8c0-c8b849c76171/JLbZl58Rf7.lottie"
+      background="transparent"
+      speed="1.8"
+      style="width: 300px; height: 300px;"
+      loop
+      autoplay>
+    </dotlottie-player>
+  </div>
+
+  <script>
+    function playSoundAndNavigate(url) {
+      const audio = document.getElementById('buttonClickSound');
+      const loader = document.getElementById('loaderWrapper');
+
+      loader.style.display = 'block';
+      audio.currentTime = 0;
+
+      audio.play().catch(() => {
+        setTimeout(() => {
+          window.location.href = url;
+        }, 2000);
+      });
+
+      audio.onended = function () {
+        setTimeout(() => {
+          window.location.href = url;
+        }, 2000);
+      };
+    }
+  </script>
+</body>
+</html>
